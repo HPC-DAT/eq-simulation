@@ -1,0 +1,46 @@
+Bootstrap: docker
+From: condaforge/miniforge3
+Stage: builder
+
+%files
+    environment.yml
+    salvus/bin/salvus
+    salvus/python_packages/salvus-2025.1.2-cp311-cp311-manylinux_2_17_x86_64.whl 
+
+%post
+    . /opt/conda/etc/profile.d/conda.sh
+
+    mamba install --yes conda-pack
+
+    # create the base environment
+    mamba env create --name myenv --file environment.yml
+
+    # add salvus executable to myenv
+    cp salvus/bin/salvus /opt/conda/envs/myenv/bin/
+
+    # install Python wheel
+    mamba run -n myenv pip install salvus/python_packages/salvus-2025.1.2-cp311-cp311-manylinux_2_17_x86_64.whl
+
+    # pack the environment to /venv
+    conda-pack --name myenv --output /tmp/env.tar && \
+        mkdir /venv && \
+        cd /venv && \
+        tar xf /tmp/env.tar && \
+        rm /tmp/env.tar && \
+        /venv/bin/conda-unpack
+
+
+Bootstrap: docker
+From: debian:12-slim
+Stage: primary
+
+%files from builder
+    /venv /venv
+    
+%environment
+    export PATH="/venv/bin:${PATH}"
+
+%runscript
+    # calling "apptainer run" will first activate the environment
+    bash -c "source /venv/bin/activate && exec $( test $# -eq 0 || /usr/bin/printf " %q" "$@" )"
+
