@@ -1,0 +1,75 @@
+name: salvus
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - alembic>=1.5.7
+  - arrow
+  - anywidget
+  - bottleneck
+  - click
+  - colored
+  - decorator
+  - dill
+  - filelock
+  - geographiclib
+  - h5netcdf
+  - h5py
+  - ipylab
+  - ipython
+  - ipykernel
+  - ipyleaflet>=0.17.0
+  - ipywidgets
+  - joblib
+  - jupyter
+  - jupyter_client>=7.1.0
+  - jupytext
+  - lxml
+  - matplotlib>=3.8.0
+  - more-itertools<11.0.0
+  - netcdf4
+  - notebook
+  - numba<0.61.0
+  - numpy>=1.21.0,<2.0a0
+  - obspy>1.2.0,<1.5.0
+  - pandas
+  - paramiko>=2.7.2
+  - pip
+  - plotly>=6.0.0
+  - pprintpp
+  - psutil
+  - pyasdf
+  - pynacl
+  - pyproj>=3.2.0
+  - python-fastjsonschema
+  - python-xxhash
+  - pythreejs>=2.1.1
+  - pyyaml
+  - questionary>=2.1.1
+  - requests
+  - scipy>=1.11.0
+  - setuptools<82.0.0
+  - sqlalchemy>=1.4.1,<2.0
+  - sympy<1.13.0
+  - tabulate
+  - toml
+  - tqdm
+  - traitlets
+  - typing_extensions>=4.4.0
+  - ujson>=4.0.2
+  - voluptuous
+  - xarray>=2025.1.1
+  - xyzservices
+# extra dependencies
+  - jupyterlab
+  - pip:
+      - jsonschema[format-nongpl]
+      - pyexodus>=0.1.6
+      # Newer versions on Windows of ortools fail on windows during a dynamic
+      # library load and might give a segfault on UNIX systems.
+      - ortools<9.8
+      # Wurlitzer to capture stdout/stderr of the response removal in the
+      # seismological processing. This is an optional dependency but
+      # currently does not work for Windows. Only the pip dependencies
+      # support conditionals.
+      - wurlitzer; platform_system != "Windows"
