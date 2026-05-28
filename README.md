@@ -16,12 +16,12 @@ chmod u+x salvus_downloader_linux
 
 Define the required dependencies via a conda environment file. We include here [an environment file](./environment.yml), which is based on the one provided as part of the Salvus [installation instructions](https://docs.mondaic.com/installation/platform_specific/linux) to which we have added jupyterlab.
 
-The use of conda on Spider is discouraged (the large number of files in the environments puts pressure on the distributed filesystem). We thus set up an environment in a container image, using Apptainer. We build the image using:
+The use of conda on Spider is discouraged (the large number of files in the environments puts pressure on the distributed filesystem). We thus set up an environment in a container image, using Apptainer. Build the image using:
 ```shell
 apptainer build eq-simulation.sif apptainer.def
 ```
 
-We can now submit [the provided jobscript](./jupyter-spider.slurm) to the queue to start a JupyterLab on a compute node of Spider (note that you might have to adapt the path to the .SIF image file in the jobscript before submission):
+Submit now [the provided jobscript](./jupyter-spider.slurm) to the queue to start a JupyterLab on a compute node of Spider (note that you might have to adapt the path to the .SIF image file in the jobscript before submission):
 ```shell
 sbatch jupyter-spider.slurm
 ```
